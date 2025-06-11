@@ -1,0 +1,325 @@
+
+
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Nguyễn Đức Phú</title>
+        <link href="https://fonts.googleapis.com/css2?family=Signika:wght@400;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <style>
+            body {
+                margin: 0;
+                font-family: 'Signika', sans-serif;
+                background: linear-gradient(to bottom right, #e0f7f4, #d6f3ec);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                color: #333;
+            }
+
+            .card {
+                background-color: #d6f3ec;
+                border-radius: 16px;
+                overflow: hidden;
+                width: 400px;
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+            }
+
+            .banner-image {
+                height: 120px;
+                background: url('/InfoDev/assets/img/banner.gif') center/cover no-repeat;
+            }
+
+            .infos {
+                padding: 15px;
+                text-align: center;
+            }
+
+            .profil-logo img {
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                border: 4px solid #d6f3ec;
+                margin-top: -40px;
+                background-color: #fff;
+            }
+
+            .badges-container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 6px;
+                margin: 10px 0;
+            }
+
+            .badge-item {
+                position: relative;
+            }
+
+            .badge-item img {
+                width: 28px;
+                height: 28px;
+                border-radius: 6px;
+            }
+
+            .tooltip {
+                position: absolute;
+                bottom: 130%;
+                background: #000;
+                color: #fff;
+                padding: 4px 8px;
+                font-size: 11px;
+                border-radius: 4px;
+                white-space: nowrap;
+                opacity: 0;
+                transition: 0.2s;
+                pointer-events: none;
+            }
+
+            .badge-item:hover .tooltip {
+                opacity: 1;
+            }
+
+            .username {
+                font-size: 22px;
+                font-weight: 600;
+                margin-top: 10px;
+            }
+
+            .card-content {
+                padding: 0 20px 20px;
+            }
+
+            .category-title {
+                font-size: 14px;
+                font-weight: 700;
+                margin: 15px 0 5px;
+                color: #666;
+                text-transform: uppercase;
+            }
+
+            .roles-list {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .role {
+                background: #d0f0eb;
+                border-radius: 12px;
+                padding: 6px 12px;
+                display: flex;
+                align-items: center;
+                font-size: 14px;
+                transition: all 0.15s ease-in-out;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+                position: relative;
+            }
+
+            .role:hover {
+                background: #b2e4dc;
+            }
+
+            .role:active {
+                background: #a0d7ce;
+                transform: translateY(1px);
+            }
+
+            .color {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-right: 6px;
+            }
+
+            textarea {
+                width: 100%;
+                padding: 8px;
+                background: #f7f7f7;
+                border: 1px solid #3a3c5e;
+                border-radius: 6px;
+                color: #fff;
+                resize: vertical;
+            }
+
+            .card-footer {
+                padding: 0 20px 20px;
+            }
+
+            .card-footer input {
+                background: #f2f2f2;
+                outline: none;
+                border: 1px solid #ccc;
+                padding: 10px;
+                width: 100%;
+                box-sizing: border-box;
+                border-radius: 3px;
+                color: #333;
+                transition-duration: 0.3s;
+            }
+
+            .card-footer input:focus {
+                border-top: 1px solid #f2f2f2;
+                border-color: #00bfa5;
+                background: #fff;
+            }
+
+            .icon-img {
+                height: 18px;
+                vertical-align: middle;
+            }
+
+            .role-link {
+                text-decoration: none;
+                color: inherit;
+                display: inline-block;
+            }
+
+            .card-content .note {
+                margin-bottom: 15px;
+            }
+
+            .card-content .note textarea {
+                background: #f7f7f7;
+                color: #333;
+                border-radius: 6px;
+                font-size: 0.8rem;
+                padding: 10px;
+                border: 1px solid #ccc;
+                resize: none;
+                width: 100%;
+                box-sizing: border-box;
+                font-family: inherit;
+            }
+        
+            .card-content .note textarea:focus {
+                outline: none;
+                border-color: #00bfa5;
+                background: #fff;
+            }
+
+            /* Curtain animation */
+            #curtain {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 9999;
+                display: flex;
+                pointer-events: none;
+            }
+
+            .curtain-left,
+            .curtain-right {
+                flex: 1;
+                background: #C1F3ED;
+                height: 100%;
+            }
+
+            .curtain-left {
+                animation: curtain-left 3.5s ease forwards;
+            }
+
+            .curtain-right {
+                animation: curtain-right 3.5s ease forwards;
+            }
+
+            @keyframes curtain-left {
+                0% {
+                    transform: translateX(0);
+                }
+
+                100% {
+                    transform: translateX(-100%);
+                }
+            }
+
+            @keyframes curtain-right {
+                0% {
+                    transform: translateX(0);
+                }
+
+                100% {
+                    transform: translateX(100%);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Curtain effect -->
+        <div id="curtain">
+            <div class="curtain-left"></div>
+            <div class="curtain-right"></div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="banner-image"></div>
+                <div class="infos">
+                    <div class="profil-logo">
+                        <img src="https://nguyenducphu.com/mrph20.png" alt="mrph20" border="0">
+                    </div>
+                    <div class="username">Nguyễn Đức Phú</div>
+                </div>
+            </div>
+            <div class="card-content">
+                <div class="about-me">
+                    <div class="category-title">About Me</div> Một Nhân Viên Lại Muốn Trở Thành Chủ Tịch 
+                </div>
+                <div class="roles">
+                    <div class="category-title">Info</div>
+                    <div class="roles-list">
+                        <a href="https://www.facebook.com/nguyenducphu.develop/" target="_blank" rel="noopener" class="role-link">
+                            <div class="role">
+                                <div class="color" style="background: orange"></div>
+                                <i class="fab fa-facebook"></i>&nbsp;Facebook
+                            </div>
+                        </a>
+                        <a href="#" target="_blank" rel="noopener" class="role-link">
+                            <div class="role">
+                                <div class="color" style="background: violet"></div>
+                                <i class="fab fa-telegram"></i>&nbsp;Độc Thân
+                            </div>
+                        </a>
+                        <a href="https://doithevip.com" target="_blank" rel="noopener" class="role-link">
+                            <div class="role">
+                                <div class="color" style="background: yellow"></div>
+                                <i class="fas fa-credit-card"></i>&nbsp;Nhân Viên
+                            </div>
+                        </a>
+                        <a href="#" target="_blank" rel="noopener" class="role-link">
+                            <div class="role">
+                                <div class="color" style="background: yellow"></div>
+                                <i class="fas fa-cloud"></i>&nbsp;Nguyễn Đức Phú
+                            </div>
+                        </a>
+                        <a href="#" target="_blank" rel="noopener" class="role-link">
+                            <div class="role">
+                                <div class="color" style="background: yellow"></div>
+                                <i class="fas fa-cloud"></i>&nbsp;Content Creator
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="note">
+                    <div class="category-title">Note</div>
+                    <textarea placeholder="Click to add a note..."></textarea>
+                </div>
+            </div>
+            <div class="card-footer">
+                <input type="text" placeholder="Send a message to @NguyenDucPhu" />
+            </div>
+        </div>
+        <script>
+            window.addEventListener('load', () => {
+              setTimeout(() => {
+                const curtain = document.getElementById('curtain');
+                if (curtain) curtain.style.display = 'none';
+              }, 3500);
+            });
+        </script>
+    </body>
+</html>
